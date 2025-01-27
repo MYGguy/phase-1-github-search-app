@@ -21,26 +21,23 @@ function addUserList(username) {
         headers: {
             'Content-Type': 'application / json',
             'Accept': 'application/vnd.github.v3+json'
-        },
-        // body: JSON.stringify({
-        //     name: 'data.name',
-        //     avatar: 'data.avatar',
-        //     link: 'data.link',
-        // })
+        }
     }
     fetch(`https://api.github.com/search/users?q=${username}`, configObject)
         .then(res => res.json())
         .then(json => {
             data = json.items;
 
-            const div = document.createElement('div');
-            div.style = 'display: flex;';
-            div.innerHTML = `
-            <h1>${data[0].login}</h1>
-            <img src='${data[0].avatar_url}' style='width: 100px'/>
-            <a href='${data[0].html_url}'>Visit ${data[0].login}'s page</a>
-            `;
+            for (i = 0; i <= 4; i++) {
+                const div = document.createElement('div');
+                div.style = 'display: block-flex; text-align: left;';
+                div.innerHTML = `
+                <h1>${data[i].login}</h1>
+                <img src='${data[i].avatar_url}' style='width: 100px'/>
+                <a href='${data[i].html_url}'>Visit ${data[i].login}'s page</a>
+                `;
 
-            userList.appendChild(div);
+                userList.appendChild(div);
+            }
         })
 };

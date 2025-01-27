@@ -29,15 +29,16 @@ function addUserList(username) {
             data = json.items;
 
             for (i = 0; i <= 4; i++) {
-                const div = document.createElement('div');
-                div.style = 'display: block-flex; text-align: left;';
-                div.innerHTML = `
+                const li = document.createElement('li');
+                li.innerHTML = `
                 <h1>${data[i].login}</h1>
-                <img src='${data[i].avatar_url}' style='width: 100px'/>
+                <img src='${data[i].avatar_url}' style='width: 100px'/></br>
+                
+                <a href='${data[i].html_url}'>Visit ${data[i].login}'s page</a></br>
                 <a href='${data[i].html_url}'>Visit ${data[i].login}'s page</a>
                 `;
 
-                userList.appendChild(div);
+                userList.appendChild(li);
             }
         })
 };

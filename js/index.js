@@ -34,7 +34,7 @@ function addUserList(username) {
                 <h1>${data[i].login}</h1>
                 <img src='${data[i].avatar_url}' style='width: 100px'/></br>
                 
-                <a href='${data[i].html_url}'>Visit ${data[i].login}'s page</a></br>
+                <a onclick='addRepoToDom(event, "${data[i].login}")'>See ${data[i].login}'s repos</a></br>
                 <a href='${data[i].html_url}'>Visit ${data[i].login}'s page</a>
                 `;
 
@@ -42,3 +42,33 @@ function addUserList(username) {
             }
         })
 };
+
+function addRepoToDom(event, username) {
+    event.preventDefault();
+
+    const configObject = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application / json',
+            'Accept': 'application/vnd.github.v3+json'
+        }
+    }
+
+    fetch(`https://api.github.com/users/${username}/repos`, configObject)
+        .then(res => res.json())
+        .then(json => {
+            data = json;
+            // reposList.textContent = '';
+            reposList.innerHTML = `<h1 style='color: blue; '>${username}'s repos:</h1 >`;
+
+            for (i = 0; i <= 4; i++) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                <h2>${data[i].name}</h2>
+                <a href='${data[i].html_url}'>View this repo</a>
+                `;
+
+                reposList.appendChild(li);
+            }
+        })
+}
